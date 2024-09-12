@@ -21,14 +21,8 @@ class ThemeApp {
   );
 
   static final inputDecoration = InputDecoration(
-    label: const Text('Usuário GitHub'),
     filled: false,
     fillColor: Colors.white,
-    labelStyle: const TextStyle(
-      fontSize: 14,
-      color: Colors.white,
-      fontWeight: FontWeight.w700,
-    ),
     floatingLabelStyle: const TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,

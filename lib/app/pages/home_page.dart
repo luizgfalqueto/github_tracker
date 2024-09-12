@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:github_tracker/app/pages/user_page.dart';
+import 'package:github_tracker/app/repositories/user/user_repository_impl.dart';
 import 'package:github_tracker/app/utils/theme_app.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -12,6 +14,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _searchEC = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchEC.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,11 +66,18 @@ class _HomePageState extends State<HomePage> {
                             // height: 48,
                             child: TextFormField(
                               controller: _searchEC,
-                              validator: Validatorless.multiple([
-                                Validatorless.required('Informe um usuário')
-                              ]),
+                              validator: Validatorless.multiple(
+                                [Validatorless.required('Informe um usuário')],
+                              ),
                               style: ThemeApp.titleRegularStyle,
-                              decoration: ThemeApp.inputDecoration,
+                              decoration: ThemeApp.inputDecoration.copyWith(
+                                label: const Text('Usuário GitHub'),
+                                labelStyle: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -76,10 +92,22 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 48,
                             child: ElevatedButton(
-                              onPressed: () {
-                                final isValid = _formKey.currentState?.validate() ?? false;
-          
-                                if(isValid) {}
+                              onPressed: () async {
+                                final isValid =
+                                    _formKey.currentState?.validate() ?? false;
+
+                                if (isValid) {
+                                  final user = await UserRepositoryImpl()
+                                      .getUser(_searchEC.text);
+
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UserPage(user: user!),
+                                    ),
+                                  );
+                                }
                               },
                               child: const Text('Pesquisar'),
                             ),

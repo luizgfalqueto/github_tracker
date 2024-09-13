@@ -13,4 +13,4 @@ App para visualizar perfil do Github a partir da API pública do Github
 - [Validatorless](https://pub.dev/packages/validatorless) para validar input do usuário
 
 ## Telas
-![1]('https://github.com/luizgfalqueto/assets/screens/home.png')
+![1]('https://github.com/luizgfalqueto/github_tracker/blob/main/assets/screens/home.png')

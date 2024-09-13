@@ -38,6 +38,7 @@ class ReposPage extends StatelessWidget {
           ),
         ),
         backgroundColor: ThemeApp.primaryColor,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -59,10 +60,13 @@ class ReposPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        reposList![index].name,
-                        style: ThemeApp.titleRegularStyle.copyWith(
-                          color: ThemeApp.primaryColor,
+                      Flexible(
+                        child: Text(
+                          reposList![index].name,
+                          overflow: TextOverflow.ellipsis,
+                          style: ThemeApp.titleRegularStyle.copyWith(
+                            color: ThemeApp.primaryColor,
+                          ),
                         ),
                       ),
                       Row(

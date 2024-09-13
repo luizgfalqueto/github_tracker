@@ -7,13 +7,32 @@ import 'package:github_tracker/app/utils/theme_app.dart';
 import '../models/user.dart';
 import '../widgets/profile_item_description.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   final User user;
 
   const UserPage({
     super.key,
     required this.user,
   });
+
+  @override
+  State<UserPage> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
+  bool isLoading = false;
+
+  void setLoading() {
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+  void stopLoading() {
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +66,7 @@ class UserPage extends StatelessWidget {
               background: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(user.avatarUrl),
+                    image: NetworkImage(widget.user.avatarUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -68,10 +87,10 @@ class UserPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Visibility(
-                        visible: user.name != '',
+                        visible: widget.user.name != '',
                         replacement: const SizedBox.shrink(),
                         child: Text(
-                          user.name,
+                          widget.user.name,
                           style: ThemeApp.titleRegularStyle.copyWith(
                             color: ThemeApp.secondaryColor,
                             fontSize: 14,
@@ -82,7 +101,7 @@ class UserPage extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        '@${user.login}',
+                        '@${widget.user.login}',
                         style: ThemeApp.titleRegularStyle.copyWith(
                           color: ThemeApp.secondaryColor,
                           fontSize: 12,
@@ -107,10 +126,10 @@ class UserPage extends StatelessWidget {
               child: Column(
                 children: [
                   Visibility(
-                    visible: user.bio != '',
+                    visible: widget.user.bio != '',
                     replacement: const SizedBox.shrink(),
                     child: Text(
-                      user.bio,
+                      widget.user.bio,
                       textAlign: TextAlign.center,
                       style: ThemeApp.titleRegularStyle.copyWith(
                         color: ThemeApp.secondaryColor,
@@ -133,7 +152,7 @@ class UserPage extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        '${user.following} following',
+                        '${widget.user.following} following',
                         style: ThemeApp.titleRegularStyle.copyWith(
                           color: ThemeApp.secondaryColor,
                           fontSize: 14,
@@ -151,7 +170,7 @@ class UserPage extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        '${user.followers} followers',
+                        '${widget.user.followers} followers',
                         style: ThemeApp.titleRegularStyle.copyWith(
                           color: ThemeApp.secondaryColor,
                           fontSize: 14,
@@ -160,51 +179,62 @@ class UserPage extends StatelessWidget {
                     ],
                   ),
                   Visibility(
-                    visible: user.location != '',
+                    visible: widget.user.location != '',
                     replacement: const SizedBox.shrink(),
                     child: ProfileItemDescription(
                       icon: Icons.location_on_rounded,
-                      text: user.location,
+                      text: widget.user.location,
                     ),
                   ),
                   Visibility(
-                    visible: user.email != '',
+                    visible: widget.user.email != '',
                     replacement: const SizedBox.shrink(),
                     child: ProfileItemDescription(
                       icon: Icons.email,
-                      text: user.email,
+                      text: widget.user.email,
                     ),
                   ),
                   Visibility(
-                    visible: user.company != '',
+                    visible: widget.user.company != '',
                     replacement: const SizedBox.shrink(),
                     child: ProfileItemDescription(
                       icon: Icons.business_outlined,
-                      text: user.company,
+                      text: widget.user.company,
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 16,
                   ),
                   Visibility(
-                    visible: user.publicRepos != 0,
+                    visible: widget.user.publicRepos != 0,
                     replacement: const SizedBox.shrink(),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final repos =
-                            await UserRepositoryImpl().getRepos(user.login);
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReposPage(
-                              reposList: repos,
-                              user: user,
+                    child: SizedBox(
+                      height: 48,
+                      width: 240,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          setLoading();
+                          final repos = await UserRepositoryImpl()
+                              .getRepos(widget.user.login);
+                      
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReposPage(
+                                reposList: repos,
+                                user: widget.user,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      child: Text('${user.publicRepos} repositórios públicos'),
+                          );
+                          stopLoading();
+                        },
+                        child: !isLoading
+                            ? Text(
+                                '${widget.user.publicRepos} repositórios públicos')
+                            : const CircularProgressIndicator(
+                                color: ThemeApp.primaryColor,
+                              ),
+                      ),
                     ),
                   )
                 ],

@@ -14,11 +14,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _searchEC = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
     _searchEC.dispose();
     super.dispose();
+  }
+
+  void setLoading() {
+    setState(() {
+      isLoading = true;
+    });
   }
 
   @override
@@ -97,6 +104,7 @@ class _HomePageState extends State<HomePage> {
                                     _formKey.currentState?.validate() ?? false;
 
                                 if (isValid) {
+                                setLoading();
                                   final user = await UserRepositoryImpl()
                                       .getUser(_searchEC.text);
 
@@ -109,7 +117,9 @@ class _HomePageState extends State<HomePage> {
                                   );
                                 }
                               },
-                              child: const Text('Pesquisar'),
+                              child: !isLoading ? const Text('Pesquisar') :  const CircularProgressIndicator(
+                                color: ThemeApp.primaryColor,
+                              ),
                             ),
                           ),
                         ),

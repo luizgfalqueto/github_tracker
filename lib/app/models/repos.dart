@@ -4,6 +4,7 @@ class Repos {
   final bool forked;
   final String language;
   final int forks;
+  final String updatedAt;
 
   Repos({
     required this.name,
@@ -11,6 +12,7 @@ class Repos {
     required this.forked,
     required this.language,
     required this.forks,
+    required this.updatedAt,
   });
 
   factory Repos.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Repos {
       forked: json['fork'],
       language: json['language'] ?? '',
       forks: json['forks'] ?? 0,
+      updatedAt: json['updated_at'] ?? DateTime(1900),
     );
   }
 }

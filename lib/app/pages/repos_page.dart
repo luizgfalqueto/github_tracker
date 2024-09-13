@@ -16,6 +16,7 @@ class ReposPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    reposList!.sort((a, b) => b.updatedAt.compareTo(a.updatedAt),);
     return Scaffold(
       backgroundColor: ThemeApp.primaryColor,
       appBar: AppBar(

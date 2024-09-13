@@ -1,16 +1,16 @@
 # github_tracker
 
-A new Flutter project.
+App para visualizar perfil do Github a partir da API pública do Github
 
-## Getting Started
+## Funcionalidade
 
-This project is a starting point for a Flutter application.
+- Busca de perfil pelo usuário informado pelo usuário
+- Apresentação de informações básicas do perfil
+- Listagem de repositórios públicos do usuário (nome, linguagem utilizada, descrição e número de forks) 
 
-A few resources to get you started if this is your first Flutter project:
+## Pacotes utilizados
+- [Dio](https://pub.dev/packages/dio) para consumi de API Rest
+- [Validatorless](https://pub.dev/packages/validatorless) para validar input do usuário
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Telas
+![1]('https://github.com/luizgfalqueto/assets/screens/home.png')

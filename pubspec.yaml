@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   validatorless: ^1.2.3
   dio: ^5.7.0
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/github_logo.png
+    - assets/images/no_found_image.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

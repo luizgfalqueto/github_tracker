@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:github_tracker/app/pages/user_page.dart';
-import 'package:github_tracker/app/repositories/user/user_repository_impl.dart';
 import 'package:github_tracker/app/utils/theme_app.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -14,18 +13,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _searchEC = TextEditingController();
-  bool isLoading = false;
 
   @override
   void dispose() {
     _searchEC.dispose();
     super.dispose();
-  }
-
-  void setLoading() {
-    setState(() {
-      isLoading = true;
-    });
   }
 
   @override
@@ -104,22 +96,43 @@ class _HomePageState extends State<HomePage> {
                                     _formKey.currentState?.validate() ?? false;
 
                                 if (isValid) {
-                                setLoading();
-                                  final user = await UserRepositoryImpl()
-                                      .getUser(_searchEC.text);
+                                  // setLoading();
+                                  // final user = await UserServiceImpl()
+                                  //     .findUser(user: _searchEC.text);
 
-                                  Navigator.pushReplacement(
+                                  // Navigator.pushReplacement(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         UserPage(),
+                                  //   ),
+                                  // );
+                                  final user = _searchEC.text.trim();
+                                  // Navigator.of(context).pushReplacementNamed(
+                                  //   '/user_page',
+                                  //   arguments: {
+                                  //     'user': user,
+                                  //   },
+                                  // );
+                                  // Navigator.of(context).push(
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => const UserPage(),
+                                  //   ),
+                                  // );
+                                  Navigator.pushNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserPage(user: user!),
-                                    ),
+                                    UserPage.routeName,
+                                    arguments:
+                                        user, // Substitua pelo itemId ou outro argumento desejado
                                   );
                                 }
                               },
-                              child: !isLoading ? const Text('Pesquisar') :  const CircularProgressIndicator(
-                                color: ThemeApp.primaryColor,
-                              ),
+                              child: const Text('Pesquisar'),
+                              // child: !isLoading
+                              //     ? const Text('Pesquisar')
+                              //     : const CircularProgressIndicator(
+                              //         color: ThemeApp.primaryColor,
+                              //       ),
                             ),
                           ),
                         ),

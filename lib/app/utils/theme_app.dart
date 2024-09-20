@@ -12,6 +12,13 @@ class ThemeApp {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  
+  static TextStyle titleLargeStyle = const TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   static final defaultInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(16),

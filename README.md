@@ -11,6 +11,7 @@ App para visualizar perfil do Github a partir da API pública do Github
 ## Pacotes utilizados
 - [Dio](https://pub.dev/packages/dio) para consumi de API Rest
 - [Validatorless](https://pub.dev/packages/validatorless) para validar input do usuário
+- [Bloc](https://pub.dev/packages/bloc) para gerenciamento de estado
 
 ## Telas
 ![home](https://github.com/user-attachments/assets/e0fdefb7-3820-498b-b0bd-5633bbcdb9f9)
